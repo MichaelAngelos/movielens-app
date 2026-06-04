@@ -70,3 +70,44 @@ def add_movie(movie: MovieCreate):
         "status": "success",
         "movieId": new_movie_id
     }
+
+class UserRating(BaseModel):
+    movieId: int
+    rating: float
+
+class RecommendationInput(BaseModel):
+    ratings: list[UserRating]
+
+@app.post("/movielens/api/recommendations")
+def get_recommendations(recommendation: RecommendationInput):
+
+    user_ratings = {r.movieId: r.rating for r in recommendation.ratings}
+    movie_ids = list(user_ratings.keys())
+    placeholders = ",".join(["?"] * len(movie_ids))
+
+    conn = get_db()
+    
+    users = conn.execute(f"SELECT * FROM ratings WHERE movieId IN ({placeholders})", movie_ids).fetchall()
+
+    other_users = {}
+
+    for row in users:
+        user_id = row["userId"]
+        movie_id = row["movieId"]
+        rating = row["rating"]
+
+        if user_id not in other_users:
+            other_users[user_id] = {}
+
+        other_users[user_id][movie_id] = rating
+        
+    for user_id, other_user_ratings in other_users.items():
+        common_movies = set(user_ratings.keys()) & set(other_user_ratings.keys())
+
+    conn.commit()
+    conn.close()
+
+    return {
+        "status": "success",
+        "recommendations": "test"
+    }
