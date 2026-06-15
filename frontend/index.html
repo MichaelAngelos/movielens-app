@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MovieLens Recommender</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>MovieLens Recommender</h1>
+
+    <section>
+        <h2>Add New Movie</h2>
+
+        <label for="movieTitle">Movie title</label>
+        <input type="text" id="movieTitle" placeholder="Example: My Movie">
+
+        <label for="movieGenres">Genres</label>
+        <input type="text" id="movieGenres" placeholder="Example: Action|Drama">
+
+        <button id="addMovieBtn">Add Movie</button>
+        <p id="addMovieMessage"></p>
+    </section>
+
+    <section>
+        <h2>Search Movies</h2>
+
+        <label for="searchInput">Search by keyword</label>
+        <input type="text" id="searchInput" placeholder="Example: toy">
+
+        <button id="searchBtn">Search</button>
+        <p id="searchMessage"></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Movie ID</th>
+                    <th>Title</th>
+                    <th>Genres</th>
+                    <th>Average Rating</th>
+                    <th>Your Rating</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="moviesTableBody"></tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Your Session Ratings</h2>
+
+        <p>These ratings are stored only in browser memory during this session.</p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Movie ID</th>
+                    <th>Rating</th>
+                </tr>
+            </thead>
+            <tbody id="userRatingsTableBody"></tbody>
+        </table>
+    </section>
+
+    <section>
+        <h2>Recommendations</h2>
+
+        <button id="recommendBtn">Get Recommendations</button>
+        <p id="recommendMessage"></p>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>Movie ID</th>
+                    <th>Title</th>
+                    <th>Genres</th>
+                    <th>Predicted Rating</th>
+                </tr>
+            </thead>
+            <tbody id="recommendationsTableBody"></tbody>
+        </table>
+    </section>
+
+    <script src="index.js"></script>
+</body>
+</html>

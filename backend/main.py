@@ -69,11 +69,18 @@ def get_ratings(movieId: int):
         "SELECT * FROM ratings WHERE movieId = ?",
         (movieId,)
     ).fetchall()
+
+    avg_row = conn.execute(
+        "SELECT AVG(rating) AS averageRating FROM ratings WHERE movieId = ?",
+        (movieId,)
+    ).fetchone()
+
     conn.close()
 
     return {
         "status": "success",
-        "ratings": [dict(rating) for rating in ratings]
+        "ratings": [dict(rating) for rating in ratings],
+        "averageRating": avg_row["averageRating"]
     }
 
 class MovieCreate(BaseModel):
@@ -211,6 +218,8 @@ def get_recommendations(recommendation: RecommendationInput):
 
         if denominator != 0:
             predicted_rating = user_avg + numerator / denominator
+            ###rating can exceed 5 or be less than 0.5 because of the weights against the other user's average rating,so we clamp it
+            predicted_rating = max(0.5, min(5.0, predicted_rating))
 
             recommendations.append({
                 "movieId": movie_id,
