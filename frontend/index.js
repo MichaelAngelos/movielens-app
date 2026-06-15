@@ -1,6 +1,7 @@
 const API_BASE = "http://localhost:3000/movielens/api";
 
 let userRatings = [];
+let selectedRatings = {};
 
 document.getElementById("addMovieBtn").addEventListener("click", addMovie);
 document.getElementById("searchBtn").addEventListener("click", searchMovies);
@@ -99,7 +100,13 @@ async function addMovieRow(movie) {
         <td>${movie.genres}</td>
         <td id="avg-${movie.movieId}">Loading...</td>
         <td>
-            <input type="number" min="0.5" max="5" step="0.5" id="rating-${movie.movieId}" placeholder="0.5 - 5">
+            <div class="stars" id="stars-${movie.movieId}">
+                <button onclick="selectStar(${movie.movieId}, 1)">★</button>
+                <button onclick="selectStar(${movie.movieId}, 2)">★</button>
+                <button onclick="selectStar(${movie.movieId}, 3)">★</button>
+                <button onclick="selectStar(${movie.movieId}, 4)">★</button>
+                <button onclick="selectStar(${movie.movieId}, 5)">★</button>
+            </div>
         </td>
         <td>
             <button onclick="rateMovie(${movie.movieId})">Rate</button>
@@ -109,6 +116,20 @@ async function addMovieRow(movie) {
     tableBody.appendChild(row);
 
     loadAverageRating(movie.movieId);
+}
+
+function selectStar(movieId, rating) {
+    selectedRatings[movieId] = rating;
+
+    const stars = document.querySelectorAll(`#stars-${movieId} button`);
+
+    stars.forEach((star, index) => {
+        if (index < rating) {
+            star.classList.add("selected");
+        } else {
+            star.classList.remove("selected");
+        }
+    });
 }
 
 async function loadAverageRating(movieId) {
@@ -138,11 +159,10 @@ async function loadAverageRating(movieId) {
 }
 
 function rateMovie(movieId) {
-    const input = document.getElementById(`rating-${movieId}`);
-    const rating = Number(input.value);
+    const rating = selectedRatings[movieId];
 
-    if (!rating || rating < 0.5 || rating > 5) {
-        alert("Please enter a rating between 0.5 and 5.");
+    if (!rating) {
+        alert("Please select a star rating first.");
         return;
     }
 
