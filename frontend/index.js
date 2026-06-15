@@ -89,9 +89,8 @@ async function searchMovies() {
     }
 }
 
-async function addMovieRow(movie) {
+function addMovieRow(movie) {
     const tableBody = document.getElementById("moviesTableBody");
-
     const row = document.createElement("tr");
 
     row.innerHTML = `
@@ -99,35 +98,50 @@ async function addMovieRow(movie) {
         <td>${movie.title}</td>
         <td>${movie.genres}</td>
         <td id="avg-${movie.movieId}">Loading...</td>
-        <td>
+        <td class="rating-column">
             <div class="stars" id="stars-${movie.movieId}">
-                <button onclick="selectStar(${movie.movieId}, 1)">★</button>
-                <button onclick="selectStar(${movie.movieId}, 2)">★</button>
-                <button onclick="selectStar(${movie.movieId}, 3)">★</button>
-                <button onclick="selectStar(${movie.movieId}, 4)">★</button>
-                <button onclick="selectStar(${movie.movieId}, 5)">★</button>
+                <button type="button" onclick="selectStar(event, ${movie.movieId}, 1)">★</button>
+                <button type="button" onclick="selectStar(event, ${movie.movieId}, 2)">★</button>
+                <button type="button" onclick="selectStar(event, ${movie.movieId}, 3)">★</button>
+                <button type="button" onclick="selectStar(event, ${movie.movieId}, 4)">★</button>
+                <button type="button" onclick="selectStar(event, ${movie.movieId}, 5)">★</button>
             </div>
         </td>
         <td>
-            <button onclick="rateMovie(${movie.movieId})">Rate</button>
+            <button type="button" onclick="rateMovie(${movie.movieId})">Rate</button>
         </td>
     `;
 
     tableBody.appendChild(row);
-
     loadAverageRating(movie.movieId);
 }
 
-function selectStar(movieId, rating) {
+function selectStar(event, movieId, starNumber) {
+    const star = event.target;
+    const rect = star.getBoundingClientRect();
+    const clickX = event.clientX - rect.left;
+
+    let rating;
+
+    if (clickX < rect.width / 2) {
+        rating = starNumber - 0.5;
+    } else {
+        rating = starNumber;
+    }
+
     selectedRatings[movieId] = rating;
 
     const stars = document.querySelectorAll(`#stars-${movieId} button`);
 
-    stars.forEach((star, index) => {
-        if (index < rating) {
-            star.classList.add("selected");
-        } else {
-            star.classList.remove("selected");
+    stars.forEach((starButton, index) => {
+        const currentStar = index + 1;
+
+        starButton.classList.remove("selected", "half-selected");
+
+        if (rating >= currentStar) {
+            starButton.classList.add("selected");
+        } else if (rating === currentStar - 0.5) {
+            starButton.classList.add("half-selected");
         }
     });
 }
@@ -148,10 +162,12 @@ async function loadAverageRating(movieId) {
             return;
         }
 
-        if (data.averageRating === null) {
-            avgCell.textContent = "No ratings";
+        if (data.averageRating !== undefined && data.averageRating !== null) {
+            avgCell.textContent = Number(data.averageRating).toFixed(2);
         } else {
-            avgCell.textContent = data.averageRating.toFixed(2);
+            const total = data.ratings.reduce((sum, r) => sum + Number(r.rating), 0);
+            const average = total / data.ratings.length;
+            avgCell.textContent = average.toFixed(2);
         }
     } catch (error) {
         avgCell.textContent = "Error";
@@ -189,7 +205,7 @@ function renderUserRatings() {
 
         row.innerHTML = `
             <td>${r.movieId}</td>
-            <td>${r.rating}</td>
+            <td class="rating-column">${r.rating}</td>
         `;
 
         tableBody.appendChild(row);

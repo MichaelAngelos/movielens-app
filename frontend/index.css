@@ -70,13 +70,21 @@ th {
     font-weight: bold;
 }
 
+.stars {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 2px;
+    min-width: 130px;
+}
+
 .stars button {
+    flex: 0 0 auto;
     background: none;
     border: none;
     color: #ccc;
-    font-size: 24px;
+    font-size: 32px;
     cursor: pointer;
-    padding: 2px;
+    padding: 1px;
 }
 
 .stars button.selected {
@@ -85,4 +93,16 @@ th {
 
 .stars button:hover {
     color: orange;
+}
+
+.rating-column {
+    min-width: 140px;
+    white-space: nowrap;
+}
+
+.stars button.half-selected {
+    color: #ccc;
+    background: linear-gradient(90deg, gold 50%, #ccc 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
