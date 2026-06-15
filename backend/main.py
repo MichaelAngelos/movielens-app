@@ -120,14 +120,10 @@ def get_recommendations(recommendation: RecommendationInput):
     other_users = {}
 
     for row in users:
-        user_id = row["userId"]
-        movie_id = row["movieId"]
-        rating = row["rating"]
+        if row["userId"] not in other_users:
+            other_users[row["userId"]] = {}
 
-        if user_id not in other_users:
-            other_users[user_id] = {}
-
-        other_users[user_id][movie_id] = rating
+        other_users[row["userId"]][row["movieId"]] = row["rating"]
 
     similarities = []
 
