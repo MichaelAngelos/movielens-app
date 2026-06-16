@@ -1,17 +1,20 @@
 const API_BASE = "http://localhost:3000/movielens/api";
 
-let userRatings = [];
+let userRatings = JSON.parse(sessionStorage.getItem("userRatings")) || [];
 let selectedRatings = {};
 
-document.getElementById("addMovieBtn").addEventListener("click", addMovie);
+document.getElementById("addMovieBtn").addEventListener("click", function(event) {
+    event.preventDefault();
+    addMovie();
+});
 document.getElementById("recommendBtn").addEventListener("click", getRecommendations);
 document.getElementById("topSearchBtn").addEventListener("click", topSearch);
-
 document.getElementById("topSearchInput").addEventListener("keydown", function(event) {
     if (event.key === "Enter") {
         topSearch();
     }
 });
+document.getElementById("clearRatingsBtn").addEventListener("click", clearRatings);
 
 async function addMovie() {
     const title = document.getElementById("movieTitle").value.trim();
@@ -114,7 +117,7 @@ function addMovieRow(movie) {
             </div>
         </td>
         <td>
-            <button type="button" onclick="rateMovie(${movie.movieId})">Rate</button>
+            <button type="button" onclick="rateMovie(${movie.movieId}, '${movie.title.replace(/'/g, "\\'")}')">Rate</button>
         </td>
     `;
 
@@ -180,7 +183,7 @@ async function loadAverageRating(movieId) {
     }
 }
 
-function rateMovie(movieId) {
+function rateMovie(movieId, title) {
     const rating = selectedRatings[movieId];
 
     if (!rating) {
@@ -192,13 +195,15 @@ function rateMovie(movieId) {
 
     if (existingRating) {
         existingRating.rating = rating;
+        existingRating.title = title;
     } else {
         userRatings.push({
             movieId: movieId,
+            title: title,
             rating: rating
         });
     }
-
+    sessionStorage.setItem("userRatings", JSON.stringify(userRatings));
     renderUserRatings();
 }
 
@@ -210,7 +215,7 @@ function renderUserRatings() {
         const row = document.createElement("tr");
 
         row.innerHTML = `
-            <td>${r.movieId}</td>
+            <td>${r.title}</td>
             <td class="rating-column">${r.rating}</td>
         `;
 
@@ -283,6 +288,9 @@ function showSection(sectionId) {
     });
 
     document.getElementById(sectionId).classList.add("active");
+    if (sectionId === "recommendationsSection") {
+        renderUserRatings();
+    }
 }
 
 function topSearch() {
@@ -295,3 +303,17 @@ function topSearch() {
 
     searchMovies();
 }
+
+function clearRatings() {
+    userRatings = [];
+    selectedRatings = {};
+
+    sessionStorage.removeItem("userRatings");
+
+    renderUserRatings();
+
+    document.getElementById("recommendationsTableBody").innerHTML = "";
+    document.getElementById("recommendMessage").textContent = "";
+}
+
+renderUserRatings();

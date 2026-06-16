@@ -33,7 +33,7 @@
         <label for="movieGenres">Genres</label>
         <input type="text" id="movieGenres" placeholder="Example: Action|Drama">
 
-        <button id="addMovieBtn">Add Movie</button>
+        <button type="button" id="addMovieBtn">Add Movie</button>
         <p id="addMovieMessage"></p>
     </section>
 
@@ -58,11 +58,8 @@
         </table>
     </section>
 
-    <section id="ratingsSection" class="page-section">
+    <section id="recommendationsSection" class="page-section active">
         <h2>Your Session Ratings</h2>
-
-        <p>These ratings are stored only in browser memory during this session.</p>
-
         <table>
             <thead>
                 <tr>
@@ -72,9 +69,7 @@
             </thead>
             <tbody id="userRatingsTableBody"></tbody>
         </table>
-    </section>
-
-    <section id="recommendationsSection" class="page-section active">
+        <button type="button" id="clearRatingsBtn">Clear Ratings</button>
         <h2>Recommendations</h2>
 
         <button id="recommendBtn">Get Recommendations</button>
