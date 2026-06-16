@@ -2,13 +2,29 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>MovieLens Recommender</title>
+    <title>MovieLens</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <h1>MovieLens Recommender</h1>
+    <nav class="topbar">
+        
+        <div style="display: flex;align-items: center; gap: 20px;">
+            <p style="font-size: 40px; font-weight: bold;">MovieLens</p>
+            <p>Search movies, rate your favorites<br>and get personalized recommendations.</p>
+        </div>
 
-    <section>
+        <div style="display: flex;align-items: center; gap: 20px;">
+            <button type="button" class="add-movie-link" onclick="showSection('addMovieSection')">➕<span>Add Movie</span></button>
+
+            <div class="top-search">
+                <input type="text" id="topSearchInput" placeholder="Search movies...">
+                <button type="button" id="topSearchBtn">🔍</button>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container">
+    <section id="addMovieSection" class="page-section">
         <h2>Add New Movie</h2>
 
         <label for="movieTitle">Movie title</label>
@@ -21,7 +37,7 @@
         <p id="addMovieMessage"></p>
     </section>
 
-    <section>
+    <section id="searchSection" class="page-section">
         <h2>Search Movies</h2>
 
         <label for="searchInput">Search by keyword</label>
@@ -45,7 +61,7 @@
         </table>
     </section>
 
-    <section>
+    <section id="ratingsSection" class="page-section">
         <h2>Your Session Ratings</h2>
 
         <p>These ratings are stored only in browser memory during this session.</p>
@@ -61,7 +77,7 @@
         </table>
     </section>
 
-    <section>
+    <section id="recommendationsSection" class="page-section active">
         <h2>Recommendations</h2>
 
         <button id="recommendBtn">Get Recommendations</button>
@@ -79,7 +95,7 @@
             <tbody id="recommendationsTableBody"></tbody>
         </table>
     </section>
-
+    </main>
     <script src="index.js"></script>
 </body>
 </html>

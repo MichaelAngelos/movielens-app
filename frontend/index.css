@@ -1,80 +1,140 @@
+* {
+    box-sizing: border-box;
+}
+
 body {
     font-family: Arial, sans-serif;
-    margin: 30px;
-    background-color: #f4f4f4;
+    margin: 0;
+    background: linear-gradient(135deg, #101828, #1d3557);
     color: #222;
+    min-height: 100vh;
 }
 
 h1 {
     text-align: center;
+    color: white;
+    margin-top: 35px;
+    margin-bottom: 8px;
+    font-size: 42px;
+}
+
+.subtitle {
+    text-align: center;
+    color: #d0d5dd;
+    margin-bottom: 35px;
+    font-size: 17px;
+}
+
+.container {
+    width: 92%;
+    max-width: 1200px;
+    margin: 0 auto 40px auto;
 }
 
 section {
     background-color: white;
-    padding: 20px;
+    padding: 24px;
     margin-bottom: 25px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    border-radius: 16px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+}
+
+h2 {
+    margin-top: 0;
+    color: #1d3557;
+    border-bottom: 2px solid #e5e7eb;
+    padding-bottom: 10px;
 }
 
 label {
     display: block;
-    margin-top: 10px;
+    margin-top: 14px;
+    margin-bottom: 6px;
     font-weight: bold;
+    color: #344054;
 }
 
 input {
-    padding: 8px;
-    margin-top: 5px;
-    margin-bottom: 10px;
-    width: 250px;
+    padding: 11px 12px;
+    margin-bottom: 12px;
+    width: 280px;
+    max-width: 100%;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    font-size: 15px;
+}
+
+input:focus {
+    outline: none;
+    border-color: #2d6cdf;
+    box-shadow: 0 0 0 3px rgba(45, 108, 223, 0.15);
 }
 
 button {
-    padding: 8px 14px;
+    padding: 10px 16px;
     cursor: pointer;
     border: none;
     background-color: #2d6cdf;
     color: white;
-    border-radius: 4px;
+    border-radius: 8px;
+    font-weight: bold;
+    transition: 0.2s;
 }
 
 button:hover {
     background-color: #1f4fa3;
+    transform: translateY(-1px);
 }
 
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 18px;
     background-color: white;
+    overflow: hidden;
+    border-radius: 10px;
 }
 
 th, td {
-    border: 1px solid #ccc;
-    padding: 8px;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 12px;
     text-align: left;
 }
 
 th {
-    background-color: #eaeaea;
+    background-color: #f1f5f9;
+    color: #344054;
+    font-size: 14px;
+}
+
+tr:hover {
+    background-color: #f8fafc;
 }
 
 .success {
-    color: green;
+    color: #067647;
+    background-color: #ecfdf3;
+    border: 1px solid #abefc6;
+    padding: 10px;
+    border-radius: 8px;
     font-weight: bold;
 }
 
 .error {
-    color: red;
+    color: #b42318;
+    background-color: #fef3f2;
+    border: 1px solid #fecdca;
+    padding: 10px;
+    border-radius: 8px;
     font-weight: bold;
 }
 
 .stars {
     display: flex;
     flex-wrap: nowrap;
-    gap: 2px;
-    min-width: 130px;
+    gap: 1px;
+    min-width: 170px;
 }
 
 .stars button {
@@ -85,19 +145,16 @@ th {
     font-size: 32px;
     cursor: pointer;
     padding: 1px;
-}
-
-.stars button.selected {
-    color: gold;
+    box-shadow: none;
 }
 
 .stars button:hover {
     color: orange;
+    transform: none;
 }
 
-.rating-column {
-    min-width: 140px;
-    white-space: nowrap;
+.stars button.selected {
+    color: gold;
 }
 
 .stars button.half-selected {
@@ -105,4 +162,62 @@ th {
     background: linear-gradient(90deg, gold 50%, #ccc 50%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+}
+
+.rating-column {
+    min-width: 175px;
+    white-space: nowrap;
+}
+
+@media (max-width: 800px) {
+    h1 {
+        font-size: 32px;
+    }
+
+    section {
+        padding: 18px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+}
+
+.topbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(94, 131, 143);
+    color: rgb(255, 255, 255);
+    padding: 0px 40px;
+}
+
+.add-movie-link {
+    color: white;
+    text-decoration: none;
+    align-items: center;
+    display: flex;
+    flex-direction:column;
+    justify-content: center;
+    gap: 10px;
+    font-weight: bold;
+    background-color: #2d6cdf;
+    padding: 10px 14px;
+    border-radius: 8px;
+}
+
+.top-search input {
+    margin: 0;
+    height: 40px;
+}
+
+.page-section {
+    display: none;
+}
+
+.page-section.active {
+    display: block;
+    margin-top: 20px;
 }
