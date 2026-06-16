@@ -196,13 +196,13 @@ tr:hover {
 
 .add-movie-link {
     color: white;
-    text-decoration: none;
     align-items: center;
     display: flex;
     flex-direction:column;
     justify-content: center;
     gap: 10px;
     font-weight: bold;
+    font-size: 14px;
     background-color: #2d6cdf;
     padding: 10px 14px;
     border-radius: 8px;
@@ -220,4 +220,14 @@ tr:hover {
 .page-section.active {
     display: block;
     margin-top: 20px;
+}
+
+.nav-button {
+    color: white;
+    background-color: #2d6cdf;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-weight: bold;
+    cursor: pointer;
 }

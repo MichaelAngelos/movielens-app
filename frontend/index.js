@@ -6,6 +6,13 @@ let selectedRatings = {};
 document.getElementById("addMovieBtn").addEventListener("click", addMovie);
 document.getElementById("searchBtn").addEventListener("click", searchMovies);
 document.getElementById("recommendBtn").addEventListener("click", getRecommendations);
+document.getElementById("topSearchBtn").addEventListener("click", topSearch);
+
+document.getElementById("topSearchInput").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+        topSearch();
+    }
+});
 
 async function addMovie() {
     const title = document.getElementById("movieTitle").value.trim();
@@ -267,4 +274,25 @@ async function getRecommendations() {
         message.textContent = "Error: " + error.message;
         message.className = "error";
     }
+}
+
+function showSection(sectionId) {
+    const sections = document.querySelectorAll(".page-section");
+
+    sections.forEach(section => {
+        section.classList.remove("active");
+    });
+
+    document.getElementById(sectionId).classList.add("active");
+}
+
+function topSearch() {
+    const topSearchInput = document.getElementById("topSearchInput");
+    const searchInput = document.getElementById("searchInput");
+
+    searchInput.value = topSearchInput.value.trim();
+
+    showSection("searchSection");
+
+    searchMovies();
 }
