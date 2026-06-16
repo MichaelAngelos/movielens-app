@@ -142,7 +142,7 @@ def get_recommendations(recommendation: RecommendationInput):
 
     similarities.sort(key=lambda x: x[1], reverse=True)
     top_users = similarities[:20]
-
+    
     ###print(json.dumps(similarities, indent=4))
 
     top_user_ids = [user_id for user_id, sim in top_users]
