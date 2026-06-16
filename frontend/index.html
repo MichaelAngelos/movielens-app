@@ -9,7 +9,7 @@
     <nav class="topbar">
         
         <div style="display: flex;align-items: center; gap: 20px;">
-            <p style="font-size: 40px; font-weight: bold;">MovieLens</p>
+            <p style="font-size: 40px; font-weight: bold;cursor: pointer;" onclick="showSection('recommendationsSection')">MovieLens</p>
             <p>Search movies, rate your favorites<br>and get personalized recommendations.</p>
         </div>
 
@@ -40,10 +40,7 @@
     <section id="searchSection" class="page-section">
         <h2>Search Movies</h2>
 
-        <label for="searchInput">Search by keyword</label>
-        <input type="text" id="searchInput" placeholder="Example: toy">
-
-        <button id="searchBtn">Search</button>
+        <input type="hidden" id="searchInput">
         <p id="searchMessage"></p>
 
         <table>

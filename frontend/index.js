@@ -4,7 +4,6 @@ let userRatings = [];
 let selectedRatings = {};
 
 document.getElementById("addMovieBtn").addEventListener("click", addMovie);
-document.getElementById("searchBtn").addEventListener("click", searchMovies);
 document.getElementById("recommendBtn").addEventListener("click", getRecommendations);
 document.getElementById("topSearchBtn").addEventListener("click", topSearch);
 
